@@ -14,6 +14,7 @@ export class AddtaskComponent implements OnInit {
   ParentTaskList:ParentTask[];
     constructor(private service:TaskManagerService) { 
       this.item = new Task();    
+      this.item.Priority= 1;
     }
   
     ngOnInit() {

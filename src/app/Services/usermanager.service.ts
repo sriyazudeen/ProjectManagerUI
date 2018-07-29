@@ -8,7 +8,7 @@ import { map} from 'rxjs/operator/map';
   providedIn: 'root'
 })
 export class UsermanagerService {
-  baseUrl:string="http://localhost/ProjectManagement/api/UserManagement/";  
+  baseUrl:string="http://localhost/ProjectManagement/api/UserManagement/";   
   constructor(private http:Http) { }
   GetAll():Observable<User[]>
   {

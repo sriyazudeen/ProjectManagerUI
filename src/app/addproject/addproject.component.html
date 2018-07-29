@@ -1,33 +1,42 @@
 <h4>Add Project</h4>
-<div class="container col-md-8">
-  <div class="form-group">
-      <label class="control-label col-md-2"><b>Task :</b></label>
-      <div class="col-md-10">
-      <input type="text" class="form-control" [(ngModel)]="item.ProjectDesc">
+<div class="row">
+    <form #myform="ngForm">
+<div class="container col-md-6">
+  <div class="form-group row">
+      <label class="control-label col-md-2"><b>Project :</b></label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="item.ProjectDesc" name="ProjectDesc">
     </div>
-  </div>
-  <div class="form-group">
-      <label class="control-label col-md-2"><b>Priority :</b></label>
-      <div class="col-md-10">
-          <input type="range" class="form-control" [(ngModel)]="item.Priority" max="30" min="1" step="1">
-    </div>
-  </div>
+  </div> 
+  <div class="form-group row">
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+              <input type="checkbox" class="form-check-input" (change)="Setdate($event)">
 
+              Set Start date and End date
+            </div>
+              <div class="col-md-3">
+              <input type="text" class="form-control" name="StartDate" [disabled]="disabledates" [(ngModel)]="item.StartDate" placeholder="Start Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+              </div>
+              <div class="col-md-3">
+              <input type="text" class="form-control" name="EndDate" [disabled] ="disabledates" [(ngModel)]="item.EndDate" placeholder="End Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+            </div>
+             
+  </div>
+  <div class="form-group row">
+        <label class="control-label col-md-2"><b>Priority :</b></label>
+        <div class="col-sm-10">
+            <input type="range" class="form-control" [(ngModel)]="item.Priority" max="30" min="1" step="1" name="Priority">
+      </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2"><b>Manager :</b></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="item.ProjectManager" name="ProjectManager">
+      </div>
+    </div>
   
-
-  <div class="form-group">
-      <label class="control-label col-md-2"><b>Start Date :</b></label>
-      <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.StartDate">
-    </div>
-  </div>
-
-  <div class="form-group">
-      <label class="control-label col-md-2"><b>End Date :</b></label>
-      <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.EndDate">
-    </div>
-  </div>
   <div class="form-group">
       <div class="col-md-12" align="center">
           <button class="btn btn-primary" (click)='Add()'>Add</button>&nbsp;
@@ -41,4 +50,105 @@
       </div>
     </div>
     </div>
+</div>
+</form>
+</div>
+<br/><br/><br/><br/>
+<div class="row">
+<div class="container col-md-12">
+        <div class="form-group row">
+          <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                      <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Search..." (input)='Search()'>
+                  </div>
+                </div>
+                
+            <br/>
+                <div class="row">
+              
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-1">
+                            <label class="control-label"><b>Sort By:</b></label>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-dark" (click)='Sort(1)'>Start Date</button>&nbsp;
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-dark" (click)='Sort(2)'>End Date</button>&nbsp;
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-dark" (click)='Sort(3)'>Priority</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-dark" (click)='Sort(3)'>Completed</button>
+                        </div>
+                      </div>                
+                    
+                      </div>   
+                  </div> 
+            </div>        
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="list-group" *ngFor="let item of filteredProjectList">
+                  <div class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-10">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="well"> 
+                                 <div class="row">
+                                   <div class="col-md-12">
+                                      <b>Project:</b> {{item.ProjectDesc}}
+                                   </div>
+                                 </div> 
+                                 <br/> 
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <b>No of Tasks:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Completed:</b>
+                                    </div>
+                                  </div>  
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <b>StartDate:</b> {{item.StartDate | date}}
+                                      </div>
+                                      <div class="col-md-6">
+                                          <b>EndDate:</b> {{item.EndDate | date}}
+                                      </div>
+                                    </div>    
+                                
+                                  
+                                  
+                              </div>
+                            </div>                  
+                            <div class="col-md-4">
+                              <div class="row"><b>Priority</b></div>      
+                              <div class="row">
+                              <div class="well">{{item.Priority}}</div></div>
+                            </div>
+                          </div>
+                    
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <div class="row">
+                    <button class="btn btn-primary" (click)='Edit(item.UserID)'>Update</button>
+                  </div>
+                  <br/>
+                  <div class="row">
+                    <button class="btn btn-primary" (click)='Delete(item.UserID)'>Delete</button>
+                  </div>
+                    </div>
+                  </div>
+                  
+                  </div>
+            </div>
+          </div>
+        </div>
+</div>
 </div>

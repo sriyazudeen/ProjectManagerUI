@@ -3,5 +3,6 @@ export class Project {
     ProjectDesc:string;
     StartDate:Date;
     EndDate:Date;
-    Priority:string;
+    Priority:number;
+    ProjectManager:number;
 }

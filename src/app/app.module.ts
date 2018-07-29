@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+
 
 import { AppComponent } from './app.component';
 import { AddtaskComponent } from './addtask/addtask.component';
@@ -13,10 +14,13 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { AddprojectComponent } from './addproject/addproject.component';
 import { AdduserComponent } from './adduser/adduser.component';
 
+
 export const appRoutes:Routes=[
-  {path:'',component:AddtaskComponent},
+  {path:'',component:AddprojectComponent},
   {path:'addtask',component:AddtaskComponent},
-  {path:'viewtask',component:ViewtaskComponent},  
+  {path:'viewtask',component:ViewtaskComponent},
+  {path:'addproject',component:AddprojectComponent},
+  {path:'adduser',component:AdduserComponent},
   {path:'updatetask/:taskid',component:UpdatetaskComponent}, 
   {path:"**",component:PagenotfoundComponent}
 ]

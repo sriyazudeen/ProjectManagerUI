@@ -45,7 +45,7 @@ export class ViewtaskComponent implements OnInit {
 
   Edit(id)
   {
-    console.log(id);
+    
     
     this.router.navigateByUrl('/updatetask/'+ id);
   }

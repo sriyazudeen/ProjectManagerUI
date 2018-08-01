@@ -5,7 +5,7 @@
         <div class="form-group row">
                 <label class="control-label col-md-2"><b>Project :</b></label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" [(ngModel)]="item.ProjectID" name="ProjectID" disabled  required id="ProjectID"  #ProjectID="ngModel">
+                    <input type="text" class="form-control" [(ngModel)]="projectdesc" name="ProjectID" disabled  required id="ProjectID"  #ProjectID="ngModel">
                     <div *ngIf="ProjectID.invalid && (ProjectID.dirty || ProjectID.touched)" class="alert alert-danger">
         
                       <div *ngIf="ProjectID.errors.required">
@@ -36,21 +36,21 @@
 
       </div>
       <div class="col-md-10">
-        <input type="checkbox" class="form-check-input" (change)="DisableFields($event)" [(ngModel)]="isParentTask" name="isParentTask">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="isParentTask" name="isParentTask">
         Parent Task
       </div>
   </div>
   <div class="form-group row">
       <label class="control-label col-md-2"><b>Priority :</b></label>
       <div class="col-md-10">
-          <input type="range" class="form-control" [(ngModel)]="item.Priority" name="Priority" max="30" min="1" step="1">
+          <input type="range" class="form-control" [(ngModel)]="item.Priority" [disabled]="isParentTask" name="Priority" max="30" min="1" step="1">
     </div>
   </div>
 
   <div class="form-group row">
         <label class="control-label col-md-2"><b>Parent Task :</b></label>
         <div class="col-sm-8">
-            <input type="text" class="form-control" [(ngModel)]="item.ParentTaskID" name="ParentTask" disabled  required id="ParentTask"  #ParentTask="ngModel">
+            <input type="text" class="form-control" [(ngModel)]="parenttaskdesc" name="ParentTask" disabled  required id="ParentTask"  #ParentTask="ngModel">
             <div *ngIf="ParentTask.invalid && (ParentTask.dirty || ParentTask.touched)" class="alert alert-danger">
 
               <div *ngIf="ParentTask.errors.required">
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="col-md-2">
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ParentTasksModal">
+        <button type="button" class="btn btn-dark" [disabled]="isParentTask" data-toggle="modal" data-target="#ParentTasksModal">
             Search...
           </button>
       </div>
@@ -70,7 +70,7 @@
   <div class="form-group row">
       <label class="control-label col-md-2"><b>Start Date :</b></label>
       <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.StartDate" name="StartDate"  required id="StartDate" #StartDate="ngModel">
+          <input type="date" class="form-control" [(ngModel)]="item.StartDate" name="StartDate"  [disabled]="isParentTask" required id="StartDate" #StartDate="ngModel">
           <div *ngIf="StartDate.invalid && (StartDate.dirty || StartDate.touched)" class="alert alert-danger">
         
                 <div *ngIf="StartDate.errors.required">
@@ -83,7 +83,7 @@
   <div class="form-group row">
       <label class="control-label col-md-2"><b>End Date :</b></label>
       <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.EndDate" name="EndDate" required id="EndDate" #EndDate="ngModel">
+          <input type="date" class="form-control" [(ngModel)]="item.EndDate" name="EndDate" [disabled]="isParentTask" required id="EndDate" #EndDate="ngModel">
           <div *ngIf="EndDate.invalid && (EndDate.dirty || EndDate.touched)" class="alert alert-danger">
         
                 <div *ngIf="EndDate.errors.required">
@@ -98,7 +98,7 @@
     <div class="form-group row">
             <label class="control-label col-md-2"><b>Task Owner :</b></label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" [(ngModel)]="item.TaskOwnerID" name="TaskOwner" disabled  required id="TaskOwner"  #TaskOwner="ngModel">
+                <input type="text" class="form-control" [(ngModel)]="taskowner" name="TaskOwner" disabled  required id="TaskOwner"  #TaskOwner="ngModel">
                 <div *ngIf="TaskOwner.invalid && (TaskOwner.dirty || TaskOwner.touched)" class="alert alert-danger">
     
                   <div *ngIf="TaskOwner.errors.required">
@@ -109,7 +109,7 @@
             </div>
           </div>
           <div class="col-md-2">
-            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#UsersModal">
+            <button type="button" class="btn btn-dark" [disabled]="isParentTask" data-toggle="modal" data-target="#UsersModal">
                 Search...
               </button>
           </div>
@@ -145,7 +145,7 @@
               <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchProject" (input)='SearchProject()'><br/><br/>
               <div class="form-group row">            
                 <div class="col-md-12">
-                    <select  class="form-control" [(ngModel)]="item.ProjectID" size="5">
+                    <select  class="form-control" [(ngModel)]="item.ProjectID" size="5" (change)="SelectProjectChange($event)">
                         <option *ngFor="let ob of filteredProjectList; let i = index" [value]='ob.ProjectID' >{{ob.ProjectDesc}}</option>
                       </select>
               </div>
@@ -171,7 +171,7 @@
                   <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchParentTask" (input)='SearchParentTask()'><br/><br/>
                   <div class="form-group row">            
                     <div class="col-md-12">
-                        <select  class="form-control" [(ngModel)]="item.ParentTaskID" size="5">
+                        <select  class="form-control" [(ngModel)]="item.ParentTaskID" size="5" (change)="SelectParentTaskChange($event)">
                             <option *ngFor="let ob of filteredParentTaskList; let i = index" [value]='ob.ParentTaskID' >{{ob.ParentTaskDesc}}</option>
                           </select>
                   </div>
@@ -197,7 +197,7 @@
                   <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchUser" (input)='SearchUser()'><br/><br/>
                   <div class="form-group row">            
                     <div class="col-md-12">
-                        <select  class="form-control" [(ngModel)]="item.TaskOwnerID" size="5">
+                        <select  class="form-control" [(ngModel)]="item.TaskOwnerID" size="5" (change)="SelectUserChange($event)">
                             <option *ngFor="let ob of filteredUserList; let i = index" [value]='ob.UserID' >{{ob.FirstName + " " + ob.LastName}}</option>
                           </select>
                   </div>

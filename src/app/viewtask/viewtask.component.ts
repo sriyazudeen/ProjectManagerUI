@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../Models/task';
 import { ParentTask} from '../Models/parent-task';
+import { Project } from '../Models/project';
 import { Filter } from '../Models/filter';
 import { TaskManagerService } from '../Services/taskmanager-service.service';
+import { ProjectmanagerService } from '../Services/projectmanager.service';
 import { Router } from '@angular/router'
 @Component({
   selector: 'app-viewtask',
@@ -11,12 +13,16 @@ import { Router } from '@angular/router'
 })
 export class ViewtaskComponent implements OnInit {
 
-  list:Task[];
+  list:Task[];  
   searchProject:string;
   filteredList:Task[];
   item:Task;
   msg:string;
-  constructor(private service:TaskManagerService ,private router:Router) { 
+  projectList:Project[];
+  filteredProjectList:Project[]; 
+  selectedProject:number; 
+  projectdesc:string;
+  constructor(private service:TaskManagerService ,private router:Router, private projectService:ProjectmanagerService) { 
     
   
   }
@@ -26,14 +32,36 @@ export class ViewtaskComponent implements OnInit {
   .subscribe(p=>{
     this.list=p;
     this.filteredList = p;
-  });   
+  }); 
+  this.GetAllProjects();  
+  }
+
+  GetAllProjects()
+  {
+    this.projectService.GetAll()
+  .subscribe(p=>{
+    this.projectList=p;    
+    this.filteredProjectList =p;
+   });
   }
 
   Search()
   {
      
       this.filteredList = this.list.filter(t=>       
-        (t.Project.ProjectDesc.startsWith(this.searchProject) || (!this.searchProject)));  
+        (t.Project.ProjectID == this.selectedProject));  
+  }
+
+  SearchProject()
+  {    
+      this.filteredProjectList = this.projectList.filter(p=>
+        (p.ProjectDesc.startsWith(this.searchProject)));       
+    
+  }
+
+  SelectChange(args)
+  {    
+    this.projectdesc = args.target.options[args.target.selectedIndex].text;
   }
 
   Sort(sortkey)

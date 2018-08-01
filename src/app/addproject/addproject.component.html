@@ -68,7 +68,7 @@
     <div class="form-group row">
         <label class="control-label col-md-2"><b>Manager :</b></label>
         <div class="col-sm-8">
-            <input type="text" class="form-control" [(ngModel)]="item.ProjectManager" name="ProjectManager" disabled  required id="ProjectManager"  #ProjectManager="ngModel">
+            <input type="text" class="form-control" [(ngModel)]="projectManager" name="ProjectManager" disabled  required id="ProjectManager"  #ProjectManager="ngModel">
             <div *ngIf="ProjectManager.invalid && (ProjectManager.dirty || ProjectManager.touched)" class="alert alert-danger">
 
               <div *ngIf="ProjectManager.errors.required">
@@ -220,7 +220,7 @@
           <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchuser" (input)='SearchUser()'><br/><br/>
           <div class="form-group row">            
             <div class="col-md-12">
-                <select  class="form-control" [(ngModel)]="item.ProjectManager" size="5">
+                <select  class="form-control" [(ngModel)]="item.ProjectManager" size="5" (change)="SelectUserChange($event)">
                     <option *ngFor="let ob of filteredUserList; let i = index" [value]='ob.UserID' [selected] = "null" >{{ob.FirstName + " " + ob.LastName}}</option>
                   </select>
           </div>

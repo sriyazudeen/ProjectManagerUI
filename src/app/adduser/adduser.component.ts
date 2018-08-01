@@ -51,7 +51,7 @@ myform:NgForm;
   }
   
     Add()
-    {
+    {      
       this.user =new User();
       this.user.EmployeeID = this.item.EmployeeID;
       this.user.FirstName = this.item.FirstName;

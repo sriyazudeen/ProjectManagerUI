@@ -17,6 +17,7 @@ export class AddtaskComponent implements OnInit {
 myform:NgForm;
   item:Task;
   task:Task;
+  parentTask:ParentTask;
   msg:string;
   ParentTaskList:ParentTask[];
   filteredParentTaskList:ParentTask[];
@@ -28,6 +29,9 @@ myform:NgForm;
   searchProject:string;
   searchParentTask:string;
   isParentTask:boolean;
+  projectdesc:string;
+  parenttaskdesc:string;
+  taskowner:string;
     constructor(private service:TaskManagerService,private projectService:ProjectmanagerService, private userService:UsermanagerService) { 
       this.item = new Task();          
     }
@@ -66,16 +70,28 @@ myform:NgForm;
   
     Add()
     {
-      this.task =new Task();
-      this.task.ProjectID = this.item.ProjectID;
-      this.task.TaskDesc=this.item.TaskDesc;
-      this.task.Priority = this.item.Priority;
-      this.task.StartDate = this.item.StartDate;    
-      this.task.EndDate = this.item.EndDate;
-      this.task.ParentTaskID = this.item.ParentTaskID;
-      this.task.TaskOwner = this.item.TaskOwner;
+      if(!this.isParentTask)
+      {
       
-      this.service.Add(this.task).subscribe(p=>this.msg=p);      
+          this.task =new Task();
+          this.task.ProjectID = this.item.ProjectID;
+          this.task.TaskDesc=this.item.TaskDesc;
+          this.task.Priority = this.item.Priority;
+          this.task.StartDate = this.item.StartDate;    
+          this.task.EndDate = this.item.EndDate;
+          this.task.ParentTaskID = this.item.ParentTaskID;
+          this.task.TaskOwner = this.item.TaskOwner;
+          
+          this.service.Add(this.task).subscribe(p=>this.msg=p);   
+      }
+      else
+      {
+          this.parentTask = new ParentTask();
+          this.parentTask.ParentTaskDesc = this.item.TaskDesc;
+
+          this.service.AddParentTask(this.parentTask).subscribe(p=>this.msg=p);
+
+      }   
     }
 
   SearchProject()
@@ -97,6 +113,21 @@ myform:NgForm;
   {
     this.filteredParentTaskList = this.ParentTaskList.filter(p=>
       (p.ParentTaskDesc.startsWith(this.searchParentTask)));
+  }
+
+  SelectProjectChange(args)
+  {
+    this.projectdesc = args.target.options[args.target.selectedIndex].text;
+  }
+
+  SelectParentTaskChange(args)
+  {
+    this.parenttaskdesc = args.target.options[args.target.selectedIndex].text;
+  }
+
+  SelectUserChange(args)
+  {
+    this.taskowner = args.target.options[args.target.selectedIndex].text;
   }
   
     Reset()

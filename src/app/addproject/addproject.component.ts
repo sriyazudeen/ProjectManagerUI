@@ -27,6 +27,7 @@ myform:NgForm;
   filteredUserList:User[];
   searchuser:string;
   invalidDate:boolean;
+  projectManager:string;
   
     constructor(private service:ProjectmanagerService,private userservice:UsermanagerService, private taskservice:TaskManagerService) { 
       this.item = new Project();  
@@ -58,6 +59,11 @@ myform:NgForm;
     this.userList=p; 
     this.filteredUserList = p;   
    });
+  }
+
+  SelectUserChange(args)
+  {
+    this.projectManager = args.target.options[args.target.selectedIndex].text;
   }
   
 
@@ -131,7 +137,7 @@ myform:NgForm;
       }
     }
 
-    Edit(id)
+  Edit(id)
   {
     this.title ="Update";
     this.msg="";

@@ -30,9 +30,16 @@ export class TaskManagerService {
     return this.http.get(this.parentUrl)
     .map((data:Response)=><ParentTask[]>data.json())
   }
+
   Add(Item:Task):Observable<string>
   {
     return this.http.post(this.baseUrl,Item)
+    .map((data:Response)=><string>data.json())
+  }
+
+  AddParentTask(Item:ParentTask):Observable<string>
+  {
+    return this.http.post(this.parentUrl,Item)
     .map((data:Response)=><string>data.json())
   }
   Delete(Id:number):Observable<string>

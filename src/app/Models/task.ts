@@ -10,8 +10,7 @@ export class Task {
     EndDate:Date;
     Priority:number; 
     ParentTask:ParentTask;
-    Project:Project;
-    TaskOwner:User;    
+    Project:Project;     
     TaskStatus:boolean;
-    TaskOwnerID:number; 
+    TaskOwner:number; 
 }

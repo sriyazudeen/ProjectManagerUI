@@ -1,5 +1,6 @@
 import { ParentTask } from "./parent-task";
 import { Project } from "./project";
+import { User} from "./user";
 export class Task {
     TaskID:number;
     ParentTaskID:number;
@@ -10,5 +11,7 @@ export class Task {
     Priority:number; 
     ParentTask:ParentTask;
     Project:Project;
-    TaskStatus:boolean; 
+    TaskOwner:User;    
+    TaskStatus:boolean;
+    TaskOwnerID:number; 
 }

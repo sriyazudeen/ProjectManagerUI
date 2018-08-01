@@ -15,6 +15,7 @@ import { AddprojectComponent } from './addproject/addproject.component';
 import { AdduserComponent } from './adduser/adduser.component';
 
 
+
 export const appRoutes:Routes=[
   {path:'',component:AddprojectComponent},
   {path:'addtask',component:AddtaskComponent},
@@ -33,6 +34,7 @@ export const appRoutes:Routes=[
     PagenotfoundComponent,
     AddprojectComponent,
     AdduserComponent
+    
   ],
   imports: [
     BrowserModule,RouterModule.forRoot(appRoutes),HttpModule,FormsModule

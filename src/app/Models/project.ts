@@ -5,4 +5,6 @@ export class Project {
     EndDate:Date;
     Priority:number;
     ProjectManager:number;
+    TaskCount:number;
+    CompletedTaskCount:number;
 }

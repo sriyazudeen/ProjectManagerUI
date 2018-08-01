@@ -1,37 +1,29 @@
 <h2>View Task</h2>
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <span class="form-label"><b>Task :</b></span>
-      <input type="text" class="form-control" [(ngModel)]="filterCriteria.Task" (input)='Search()'>
+    <div class="col-md-1">
+        <span class="form-label"><b>Project :</b></span>
     </div>
-    <div class="col-md-6">
-      <span class="form-label"><b>Parent Task :</b></span>
-      <input type="text"  class="form-control" [(ngModel)]="filterCriteria.ParentTask" (input)='Search()'>
+    <div class="col-md-6">      
+      <input type="text" class="form-control" [(ngModel)]="searchProject" (input)='Search()'>
+    </div>
+    <div class="col-md-1">
+        <label class="control-label"><b>Sort By:</b></label>
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-dark" (click)='Sort(1)'>Start Date</button>&nbsp;
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-dark" (click)='Sort(2)'>End Date</button>&nbsp;
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-dark" (click)='Sort(3)'>Priority</button>
+    </div>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-dark" (click)='Sort(4)'>Completed</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <table>
-        <tr>
-          <td><span class="form-label"><b>Priority From:</b></span></td>
-          <td><input type="text" class="form-control" [(ngModel)]="filterCriteria.PriorityFrom" (input)='Search()'></td>
-          <td>
-              <span class="form-label"><b>Priority To:</b></span>
-          </td>
-          <td>
-              <input type="text" class="form-control" [(ngModel)]="filterCriteria.PriorityTo" (input)='Search()'>
-          </td>
-          <td><span><b>Start Date :</b></span></td>
-    <td><input type="date" class="form-control" [(ngModel)]="filterCriteria.StartDate" (input)='Search()'></td>
-    <td><span><b>End Date :</b></span></td>
-    <td><input type="date" class="form-control" [(ngModel)]="filterCriteria.EndDate" (input)='Search()'></td>
-        </tr>
-      </table>         
-    </div>
-    
-    
-  </div>
+ 
   <br>
   <br> 
 
@@ -44,10 +36,11 @@
                     <thead>
                       <tr>
                         <th>Task</th>
-                        <th>Parent</th>                        
+                        <th>Parent</th>  
+                        <th>Project</th>                      
                         <th>Start</th>
                         <th>End</th>
-                        <th>Priority</th>
+                        <th>Priority</th>                        
                         <th></th>
                         <th></th>
                       </tr>
@@ -58,6 +51,7 @@
                         <td><div class="well">{{item.TaskDesc}}</div></td>
                       
                         <td><div class="well">{{item.ParentTask.ParentTaskDesc}}</div></td>                        
+                        <td><div class="well">{{item.Project.ProjectDesc}}</div></td>
                         <td>{{item.StartDate|date}}</td>
                         <td>{{item.EndDate|date}}</td>
                         <td>{{item.Priority}}</td>

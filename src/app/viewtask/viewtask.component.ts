@@ -12,12 +12,12 @@ import { Router } from '@angular/router'
 export class ViewtaskComponent implements OnInit {
 
   list:Task[];
-  filterCriteria:Filter;
+  searchProject:string;
   filteredList:Task[];
   item:Task;
   msg:string;
   constructor(private service:TaskManagerService ,private router:Router) { 
-    this.filterCriteria = new Filter();   
+    
   
   }
 
@@ -32,15 +32,48 @@ export class ViewtaskComponent implements OnInit {
   Search()
   {
      
-      this.filteredList = this.list.filter(t=>
-        (t.TaskDesc.startsWith(this.filterCriteria.Task) || (!this.filterCriteria.Task)) &&
-        (t.ParentTask.ParentTaskDesc.startsWith(this.filterCriteria.ParentTask) || (!this.filterCriteria.ParentTask)) &&
-        ((t.Priority >= this.filterCriteria.PriorityFrom && 
-          t.Priority <= this.filterCriteria.PriorityTo) || (!this.filterCriteria.PriorityFrom) || (!this.filterCriteria.PriorityTo)) &&
-          ((t.StartDate >= this.filterCriteria.StartDate && 
-            t.EndDate <= this.filterCriteria.EndDate) || (!this.filterCriteria.StartDate) || (!this.filterCriteria.EndDate))
+      this.filteredList = this.list.filter(t=>       
+        (t.Project.ProjectDesc.startsWith(this.searchProject) || (!this.searchProject)));  
+  }
+
+  Sort(sortkey)
+  {
+     this.filteredList = this.list.sort(function(a,b)
+    {
       
-      );  
+      if(sortkey == 1)
+      {
+      if(a.StartDate < b.StartDate)
+        return -1;
+      if(a.StartDate > b.StartDate)
+        return 1;
+      return 0;
+      }
+      else if(sortkey == 2)
+      {
+        if(a.EndDate < b.EndDate)
+        return -1;
+      if(a.EndDate > b.EndDate)
+        return 1;
+      return 0;
+      }
+      else if(sortkey == 3)
+      {
+        if(a.Priority < b.Priority)
+        return -1;
+      if(a.Priority > b.Priority)
+        return 1;
+      return 0;
+      }
+      else if(sortkey == 4)
+      {
+        if(a.TaskStatus < b.TaskStatus)
+        return -1;
+      if(a.TaskStatus > b.TaskStatus)
+        return 1;
+      return 0;
+      }
+    });
   }
 
   Edit(id)

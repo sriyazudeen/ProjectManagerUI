@@ -1,40 +1,120 @@
 <h4>Add Task</h4>
+<div class="row">
+<form #myform="ngForm">
 <div class="container col-md-8">
-  <div class="form-group">
+        <div class="form-group row">
+                <label class="control-label col-md-2"><b>Project :</b></label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" [(ngModel)]="item.ProjectID" name="ProjectID" disabled  required id="ProjectID"  #ProjectID="ngModel">
+                    <div *ngIf="ProjectID.invalid && (ProjectID.dirty || ProjectID.touched)" class="alert alert-danger">
+        
+                      <div *ngIf="ProjectID.errors.required">
+                        Project  is required.
+                      </div>      
+                </div>
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ProjectsModal">
+                    Search...
+                  </button>
+              </div>
+            </div>
+  <div class="form-group row">
       <label class="control-label col-md-2"><b>Task :</b></label>
       <div class="col-md-10">
-      <input type="text" class="form-control" [(ngModel)]="item.TaskDesc">
+      <input type="text" class="form-control" [(ngModel)]="item.TaskDesc" required id="TaskDesc" name="TaskDesc"  #TaskDesc="ngModel">
+      <div *ngIf="TaskDesc.invalid && (TaskDesc.dirty || TaskDesc.touched)" class="alert alert-danger">
+        
+            <div *ngIf="TaskDesc.errors.required">
+              Task Desc  is required.
+            </div>      
+      </div>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
+      <div class="col-md-2">
+
+      </div>
+      <div class="col-md-10">
+        <input type="checkbox" class="form-check-input" (change)="DisableFields($event)" [(ngModel)]="isParentTask" name="isParentTask">
+        Parent Task
+      </div>
+  </div>
+  <div class="form-group row">
       <label class="control-label col-md-2"><b>Priority :</b></label>
       <div class="col-md-10">
-          <input type="range" class="form-control" [(ngModel)]="item.Priority" max="30" min="1" step="1">
+          <input type="range" class="form-control" [(ngModel)]="item.Priority" name="Priority" max="30" min="1" step="1">
     </div>
   </div>
 
-  <div class="form-group">
-      <label class="control-label col-md-2"><b>Parent Task :</b></label>
-      <div class="col-md-10">
-          <select  class="form-control" [(ngModel)]="item.ParentTaskID">
-              <option *ngFor="let ob of ParentTaskList; let i = index" [value]='ob.ParentTaskID' [selected] = "null" >{{ob.ParentTaskDesc}}</option>
-            </select>
-    </div>
-  </div>
+  <div class="form-group row">
+        <label class="control-label col-md-2"><b>Parent Task :</b></label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" [(ngModel)]="item.ParentTaskID" name="ParentTask" disabled  required id="ParentTask"  #ParentTask="ngModel">
+            <div *ngIf="ParentTask.invalid && (ParentTask.dirty || ParentTask.touched)" class="alert alert-danger">
 
-  <div class="form-group">
+              <div *ngIf="ParentTask.errors.required">
+                ParentTask  is required.
+              </div>      
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#ParentTasksModal">
+            Search...
+          </button>
+      </div>
+    </div>
+
+  
+
+  <div class="form-group row">
       <label class="control-label col-md-2"><b>Start Date :</b></label>
       <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.StartDate">
+          <input type="date" class="form-control" [(ngModel)]="item.StartDate" name="StartDate"  required id="StartDate" #StartDate="ngModel">
+          <div *ngIf="StartDate.invalid && (StartDate.dirty || StartDate.touched)" class="alert alert-danger">
+        
+                <div *ngIf="StartDate.errors.required">
+                  StartDate  is required.
+                </div>      
+          </div>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group row">
       <label class="control-label col-md-2"><b>End Date :</b></label>
       <div class="col-md-10">
-          <input type="date" class="form-control" [(ngModel)]="item.EndDate">
+          <input type="date" class="form-control" [(ngModel)]="item.EndDate" name="EndDate" required id="EndDate" #EndDate="ngModel">
+          <div *ngIf="EndDate.invalid && (EndDate.dirty || EndDate.touched)" class="alert alert-danger">
+        
+                <div *ngIf="EndDate.errors.required">
+                  EndDate  is required.
+                </div>      
+          </div>
     </div>
   </div>
+
+  
+
+    <div class="form-group row">
+            <label class="control-label col-md-2"><b>Task Owner :</b></label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" [(ngModel)]="item.TaskOwnerID" name="TaskOwner" disabled  required id="TaskOwner"  #TaskOwner="ngModel">
+                <div *ngIf="TaskOwner.invalid && (TaskOwner.dirty || TaskOwner.touched)" class="alert alert-danger">
+    
+                  <div *ngIf="TaskOwner.errors.required">
+                    TaskOwner  is required.
+                  </div>
+                  
+          
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#UsersModal">
+                Search...
+              </button>
+          </div>
+        </div>
+
   <div class="form-group">
       <div class="col-md-12" align="center">
           <button class="btn btn-primary" (click)='Add()'>Add</button>&nbsp;
@@ -49,3 +129,83 @@
     </div>
     </div>
 </div>
+</form>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="ProjectsModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Projects</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchProject" (input)='SearchProject()'><br/><br/>
+              <div class="form-group row">            
+                <div class="col-md-12">
+                    <select  class="form-control" [(ngModel)]="item.ProjectID" size="5">
+                        <option *ngFor="let ob of filteredProjectList; let i = index" [value]='ob.ProjectID' >{{ob.ProjectDesc}}</option>
+                      </select>
+              </div>
+            </div>        
+            </div>
+            <div class="modal-footer">          
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" tabindex="-1" role="dialog" id="ParentTasksModal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Parent Tasks</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchParentTask" (input)='SearchParentTask()'><br/><br/>
+                  <div class="form-group row">            
+                    <div class="col-md-12">
+                        <select  class="form-control" [(ngModel)]="item.ParentTaskID" size="5">
+                            <option *ngFor="let ob of filteredParentTaskList; let i = index" [value]='ob.ParentTaskID' >{{ob.ParentTaskDesc}}</option>
+                          </select>
+                  </div>
+                </div>        
+                </div>
+                <div class="modal-footer">          
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Select</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      <div class="modal" tabindex="-1" role="dialog" id="UsersModal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Users</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchUser" (input)='SearchUser()'><br/><br/>
+                  <div class="form-group row">            
+                    <div class="col-md-12">
+                        <select  class="form-control" [(ngModel)]="item.TaskOwnerID" size="5">
+                            <option *ngFor="let ob of filteredUserList; let i = index" [value]='ob.UserID' >{{ob.FirstName + " " + ob.LastName}}</option>
+                          </select>
+                  </div>
+                </div>        
+                </div>
+                <div class="modal-footer">          
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Select</button>
+                </div>
+              </div>
+            </div>
+          </div>
